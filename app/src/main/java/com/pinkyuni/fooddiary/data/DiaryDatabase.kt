@@ -9,7 +9,7 @@ import com.pinkyuni.entities.associative.Favourites
 import com.pinkyuni.entities.associative.FoodCategory
 import com.pinkyuni.entities.associative.Preferences
 import com.pinkyuni.entities.WeightStatistics
-import com.pinkyuni.entities.associative.FoodVitaminCrosRef
+import com.pinkyuni.entities.associative.FoodVitaminCrossRef
 import com.pinkyuni.entities.core.*
 import com.pinkyuni.entities.core.Target
 import com.pinkyuni.fooddiary.utils.DateTypeConverter
@@ -20,7 +20,7 @@ import com.pinkyuni.usecases.UserDao
 @Database(
     entities = [User::class, Gender::class, Target::class, Activity::class,
         Category::class, Food::class, Favourites::class, FoodCategory::class,
-        Vitamin::class, FoodVitaminCrosRef::class,
+        Vitamin::class, FoodVitaminCrossRef::class,
         Preferences::class, WeightStatistics::class],
     version = 1
 )
@@ -39,7 +39,7 @@ abstract class DiaryDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         DiaryDatabase::class.java,
-                        "myDB"
+                        "FoodDiary"
                     ).build()
                 }
             }

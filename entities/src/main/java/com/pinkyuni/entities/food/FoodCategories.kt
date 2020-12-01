@@ -10,8 +10,8 @@ import com.pinkyuni.entities.core.Food
 data class FoodCategories(
     @Embedded val food: Food,
     @Relation(
-        parentColumn = "food",
-        entityColumn = "category",
+        parentColumn = "food_id",
+        entityColumn = "category_id",
         associateBy = Junction(FoodCategory::class)
     )
     val categories: List<Category>

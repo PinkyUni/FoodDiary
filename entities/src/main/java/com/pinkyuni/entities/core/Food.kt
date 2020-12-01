@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 )
 data class Food(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Int,
     val name: String,
     val image: String? = null
 )

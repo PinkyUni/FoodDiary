@@ -10,8 +10,8 @@ import com.pinkyuni.entities.core.User
 data class UserFavourites(
     @Embedded val user: User,
     @Relation(
-        parentColumn = "user",
-        entityColumn = "food",
+        parentColumn = "user_id",
+        entityColumn = "food_id",
         associateBy = Junction(Favourites::class)
     )
     val favourites: List<Food>

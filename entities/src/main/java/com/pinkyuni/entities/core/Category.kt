@@ -5,10 +5,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    indices = [Index("name")]
+    indices = [Index("name", unique = true)]
 )
-data class Category (
+data class Category(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Int,
     val name: String
 )

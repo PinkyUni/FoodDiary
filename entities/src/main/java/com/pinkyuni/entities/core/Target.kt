@@ -5,7 +5,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    indices = [Index("name")]
+    indices = [Index("name", unique = true)]
 )
 data class Target(
     @PrimaryKey(autoGenerate = true)

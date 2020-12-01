@@ -1,7 +1,7 @@
 package com.pinkyuni.usecases
 
 import androidx.room.*
-import com.pinkyuni.entities.associative.FoodVitaminCrosRef
+import com.pinkyuni.entities.associative.FoodVitaminCrossRef
 import com.pinkyuni.entities.core.Food
 import com.pinkyuni.entities.core.Vitamin
 import com.pinkyuni.entities.food.FoodVitamins
@@ -20,6 +20,6 @@ interface FoodDao {
     fun getFoodVitamins(): List<FoodVitamins>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addFoodVitamins(foodVitamins: List<FoodVitaminCrosRef>)
+    fun addFoodVitamins(foodVitamins: List<FoodVitaminCrossRef>)
 
 }

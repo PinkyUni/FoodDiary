@@ -10,8 +10,8 @@ import com.pinkyuni.entities.core.User
 data class UserPreferences(
     @Embedded val user: User,
     @Relation(
-        parentColumn = "user",
-        entityColumn = "category",
+        parentColumn = "user_id",
+        entityColumn = "category_id",
         associateBy = Junction(Preferences::class)
     )
     val preferences: List<Category>

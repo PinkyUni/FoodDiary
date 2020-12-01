@@ -9,6 +9,6 @@ import androidx.room.PrimaryKey
 )
 data class Gender(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int,
     val name: String
 )

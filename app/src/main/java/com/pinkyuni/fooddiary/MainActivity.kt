@@ -3,14 +3,13 @@ package com.pinkyuni.fooddiary
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.pinkyuni.entities.associative.FoodVitaminCrosRef
+import com.pinkyuni.entities.associative.FoodVitaminCrossRef
 import com.pinkyuni.entities.core.Food
 import com.pinkyuni.entities.core.Gender
 import com.pinkyuni.entities.core.Vitamin
 import com.pinkyuni.fooddiary.data.DiaryDatabase
 import com.pinkyuni.usecases.GenderDao
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,9 +30,9 @@ class MainActivity : AppCompatActivity() {
             val vitamin = Vitamin(1, "Ca")
             val vitamin2 = Vitamin(2, "Mg")
             val food = Food(1, "Milk")
-            val fv = ArrayList<FoodVitaminCrosRef>()
-            fv.add(FoodVitaminCrosRef(food.id, vitamin.id))
-            fv.add(FoodVitaminCrosRef(food.id, vitamin2.id))
+            val fv = ArrayList<FoodVitaminCrossRef>()
+            fv.add(FoodVitaminCrossRef(food.id, vitamin.id))
+            fv.add(FoodVitaminCrossRef(food.id, vitamin2.id))
             DiaryDatabase.destroyDataBase()
             db = DiaryDatabase.getAppDataBase(context = this)
             val foodDao = db?.foodDao()

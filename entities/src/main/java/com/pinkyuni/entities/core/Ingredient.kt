@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(
     indices = [Index("name", unique = true)]
 )
-data class Vitamin(
-    @PrimaryKey(autoGenerate = true)
+data class Ingredient(
+    @PrimaryKey
     val id: Int,
     val name: String
 )
