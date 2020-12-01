@@ -5,13 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.pinkyuni.entities.associative.Favourites
-import com.pinkyuni.entities.associative.FoodCategory
-import com.pinkyuni.entities.associative.Preferences
-import com.pinkyuni.entities.WeightStatistics
-import com.pinkyuni.entities.associative.FoodVitaminCrossRef
+import com.pinkyuni.entities.*
+import com.pinkyuni.entities.associative.*
 import com.pinkyuni.entities.core.*
 import com.pinkyuni.entities.core.Target
+import com.pinkyuni.entities.core.Unit
 import com.pinkyuni.fooddiary.utils.DateTypeConverter
 import com.pinkyuni.usecases.FoodDao
 import com.pinkyuni.usecases.GenderDao
@@ -20,8 +18,10 @@ import com.pinkyuni.usecases.UserDao
 @Database(
     entities = [User::class, Gender::class, Target::class, Activity::class,
         Category::class, Food::class, Favourites::class, FoodCategory::class,
-        Vitamin::class, FoodVitaminCrossRef::class,
-        Preferences::class, WeightStatistics::class],
+        Vitamin::class, FoodVitaminCrossRef::class, Meal::class, Monitoring::class,
+        Ingredient::class, IngredientVitaminCrossRef::class, Unit::class,
+        FoodInfo::class, History::class, HistoryFood::class, IngredientInfo::class,
+        Preferences::class, WeightStatistics::class, StateStatistics::class],
     version = 1
 )
 @TypeConverters(DateTypeConverter::class)

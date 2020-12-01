@@ -1,5 +1,2 @@
-include ':usecases'
-include ':entities'
-include ':app:entities'
 include ':app'
 rootProject.name = "FoodDiary"
