@@ -19,6 +19,15 @@ interface FoodDao {
     @Query("SELECT * FROM Food")
     fun getFoodVitamins(): List<FoodVitamins>
 
+    @Transaction
+    @Query("SELECT * FROM Food WHERE id = :foodId")
+    fun getFoodVitamins(foodId: Int): List<FoodVitamins>
+
+    @Query("SELECT * FROM FOOD WHERE name LIKE  '%' || :name || '%'")
+    fun getFood(name: String): List<Food>
+
+
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addFoodVitamins(foodVitamins: List<FoodVitaminCrossRef>)
 

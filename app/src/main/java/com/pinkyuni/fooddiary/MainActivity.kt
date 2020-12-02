@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initFood()
+        getFood("суп")
     }
 
     private fun initFood() {
@@ -33,6 +33,21 @@ class MainActivity : AppCompatActivity() {
                 var finalString = ""
                 list?.map { finalString += it.food.name + " : " + it.vitamins }
                 tvMain.text = finalString
+            }.subscribe()
+    }
+
+    private fun getFood(foodName: String) {
+        Observable.fromCallable {
+            db = DiaryDatabase.getAppDataBase(context = this)
+            val foodDao = db?.foodDao()
+            foodDao?.getFood(foodName)
+        }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            }
+            .doOnNext {
+                tvMain.text = it.toString()
             }.subscribe()
     }
 
