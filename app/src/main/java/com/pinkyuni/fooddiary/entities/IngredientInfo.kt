@@ -1,13 +1,34 @@
-package com.pinkyuni.entities
+package com.pinkyuni.fooddiary.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.pinkyuni.fooddiary.entities.core.Ingredient
+import com.pinkyuni.fooddiary.entities.core.Unit
 
-@Entity
+@Entity(
+    primaryKeys = ["ingredient_id", "unit_id"],
+    indices = [
+        Index("ingredient_id", "unit_id")
+    ],
+    foreignKeys = [
+        ForeignKey(
+            entity = Unit::class,
+            parentColumns = ["id"],
+            childColumns = ["unit_id"],
+            onDelete = ForeignKey.RESTRICT,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = Ingredient::class,
+            parentColumns = ["id"],
+            childColumns = ["ingredient_id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        )
+    ]
+)
 data class IngredientInfo(
-    @PrimaryKey
-    val id: Int,
+    @ColumnInfo(name = "ingredient_id")
+    val ingredient: Int,
     val calories: Int,
     val protein: Float,
     val fat: Float,

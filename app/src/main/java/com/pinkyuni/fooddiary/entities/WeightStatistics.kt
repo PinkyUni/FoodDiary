@@ -1,27 +1,30 @@
-package com.pinkyuni.entities
+package com.pinkyuni.fooddiary.entities
 
 import androidx.room.*
-import com.pinkyuni.entities.core.User
-import java.sql.Time
+import com.pinkyuni.fooddiary.entities.core.User
 import java.util.*
 
 @Entity(
-    indices = [Index("record_date"), Index("user_id")],
+    indices = [
+        Index("user_id", "record_date"),
+    ],
     foreignKeys = [
         ForeignKey(
             entity = User::class,
-            parentColumns = ["id"], childColumns = ["user_id"]
+            parentColumns = ["id"], childColumns = ["user_id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )
 data class WeightStatistics(
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Int,
     @ColumnInfo(name = "user_id")
-    val user: Long,
+    val user: Int,
     val weight: Float,
     @ColumnInfo(name = "record_date")
     val recordDate: Date,
     @ColumnInfo(name = "record_time")
-    val recordTime: Time
+    val recordTime: String
 )

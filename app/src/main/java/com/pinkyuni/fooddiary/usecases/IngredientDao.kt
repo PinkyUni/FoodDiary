@@ -1,4 +1,4 @@
-package com.pinkyuni.usecases
+package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.Dao
 

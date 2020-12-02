@@ -1,10 +1,10 @@
-package com.pinkyuni.usecases
+package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
-import com.pinkyuni.entities.associative.FoodVitaminCrossRef
-import com.pinkyuni.entities.core.Food
-import com.pinkyuni.entities.core.Vitamin
-import com.pinkyuni.entities.food.FoodVitamins
+import com.pinkyuni.fooddiary.entities.associative.FoodVitaminCrossRef
+import com.pinkyuni.fooddiary.entities.core.Food
+import com.pinkyuni.fooddiary.entities.core.Vitamin
+import com.pinkyuni.fooddiary.entities.food.FoodVitamins
 
 @Dao
 interface FoodDao {

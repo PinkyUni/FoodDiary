@@ -1,11 +1,11 @@
-package com.pinkyuni.entities.food
+package com.pinkyuni.fooddiary.entities.food
 
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
-import com.pinkyuni.entities.associative.FoodVitaminCrossRef
-import com.pinkyuni.entities.core.Food
-import com.pinkyuni.entities.core.Vitamin
+import com.pinkyuni.fooddiary.entities.associative.FoodVitaminCrossRef
+import com.pinkyuni.fooddiary.entities.core.Food
+import com.pinkyuni.fooddiary.entities.core.Vitamin
 
 data class FoodVitamins(
     @Embedded val food: Food,

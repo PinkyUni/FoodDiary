@@ -1,7 +1,7 @@
-package com.pinkyuni.usecases
+package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
-import com.pinkyuni.entities.core.User
+import com.pinkyuni.fooddiary.entities.core.User
 
 @Dao
 interface UserDao {

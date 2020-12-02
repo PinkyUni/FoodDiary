@@ -1,21 +1,32 @@
-package com.pinkyuni.entities
+package com.pinkyuni.fooddiary.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.pinkyuni.entities.core.Food
-import com.pinkyuni.entities.core.Unit
+import androidx.room.Index
+import com.pinkyuni.fooddiary.entities.core.Food
+import com.pinkyuni.fooddiary.entities.core.Unit
 
 @Entity(
     tableName = "Food_info",
+    primaryKeys = ["food_id", "unit_id"],
+    indices = [
+        Index("unit_id", "food_id")
+    ],
     foreignKeys = [
         ForeignKey(
             entity = Food::class,
-            parentColumns = ["id"], childColumns = ["food"]
+            parentColumns = ["id"],
+            childColumns = ["food_id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = Unit::class,
-            parentColumns = ["id"], childColumns = ["unit"]
+            parentColumns = ["id"],
+            childColumns = ["unit_id"],
+            onDelete = ForeignKey.RESTRICT,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )

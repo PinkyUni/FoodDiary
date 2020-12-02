@@ -1,29 +1,45 @@
-package com.pinkyuni.entities
+package com.pinkyuni.fooddiary.entities
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import com.pinkyuni.entities.core.Food
-import com.pinkyuni.entities.core.Unit
+import androidx.room.*
+import com.pinkyuni.fooddiary.entities.core.Food
+import com.pinkyuni.fooddiary.entities.core.Unit
+
 
 @Entity(
     tableName = "History_food",
+    primaryKeys = ["history_id", "food_id", "unit_id"],
+    indices = [
+        Index("food_id"),
+        Index("history_id"),
+        Index("unit_id")
+    ],
     foreignKeys = [
         ForeignKey(
             entity = Food::class,
-            parentColumns = ["id"], childColumns = ["food_id"]
+            parentColumns = ["id"],
+            childColumns = ["food_id"],
+            onDelete = ForeignKey.RESTRICT,
+            onUpdate = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = Unit::class,
-            parentColumns = ["id"], childColumns = ["unit_id"]
+            parentColumns = ["id"],
+            childColumns = ["unit_id"],
+            onDelete = ForeignKey.RESTRICT,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = History::class,
+            parentColumns = ["id"],
+            childColumns = ["history_id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ]
 )
 data class HistoryFood(
-    @PrimaryKey
     @ColumnInfo(name = "history_id")
-    val id: Int,
+    val history: Int,
     @ColumnInfo(name = "food_id")
     val food: Int,
     val size: Int,
