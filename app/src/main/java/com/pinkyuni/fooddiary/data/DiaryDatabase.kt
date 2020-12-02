@@ -19,7 +19,8 @@ import com.pinkyuni.fooddiary.utils.DateTypeConverter
         Vitamin::class, FoodVitaminCrossRef::class, Meal::class, Monitoring::class,
         Ingredient::class, IngredientVitaminCrossRef::class, Unit::class,
         FoodInfo::class, History::class, HistoryFood::class, IngredientInfo::class,
-        Preferences::class, WeightStatistics::class, StateStatistics::class],
+        Preferences::class, WeightStatistics::class, StateStatistics::class,
+        FoodIngredientCrossRef::class],
     version = 1
 )
 @TypeConverters(DateTypeConverter::class)
@@ -35,7 +36,11 @@ abstract class DiaryDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(DiaryDatabase::class) {
                     INSTANCE =
-                        Room.databaseBuilder( context.applicationContext, DiaryDatabase::class.java, "FoodDiary")
+                        Room.databaseBuilder(
+                            context.applicationContext,
+                            DiaryDatabase::class.java,
+                            "FoodDiary"
+                        )
                             .createFromAsset("diary.db")
                             .build()
                 }

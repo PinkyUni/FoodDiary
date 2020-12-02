@@ -17,7 +17,7 @@ interface IngredientDao {
     fun getIngredients(): List<Ingredient>
 
     @Transaction
-    @Query("SELECT * FROM Food")
+    @Query("SELECT * FROM Ingredient")
     fun getFoodVitamins(): List<IngredientVitamins>
 
     @Transaction
