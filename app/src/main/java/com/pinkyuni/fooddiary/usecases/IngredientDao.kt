@@ -22,6 +22,6 @@ interface IngredientDao {
 
     @Transaction
     @Query("SELECT * FROM Food WHERE id = :foodId")
-    fun getFoodVitamins(foodId: Int): List<IngredientVitamins>
+    fun getFoodVitamins(foodId: Long): List<IngredientVitamins>
 
 }

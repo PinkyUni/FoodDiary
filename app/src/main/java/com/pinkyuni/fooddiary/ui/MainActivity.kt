@@ -4,60 +4,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.pinkyuni.fooddiary.R
-import com.pinkyuni.fooddiary.data.DiaryDatabase
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<MainViewModel>()
-    private var db: DiaryDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initObservers()
 
-        getFoodInfo(4)
+        viewModel.getFoodInfo(4)
     }
 
     private fun initObservers() {
         viewModel.isError.observe(this, {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
-    }
-
-    private fun initFood() {
-        Observable.fromCallable {
-            db = DiaryDatabase.getAppDataBase(context = this)
-            val foodDao = db?.foodDao()
-            foodDao?.getFoodVitamins()
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-            }
-            .doOnNext { list ->
-                var finalString = ""
-                list?.map { finalString += it.food.name + " : " + it.vitamins }
-                tvMain.text = finalString
-            }.subscribe()
-    }
-
-    private fun getFoodInfo(id: Int) {
-        Observable.fromCallable {
-            viewModel.getFoodInfo(id)
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-            }
-            .doOnNext {
-                tvMain.text = it.toString()
-            }.subscribe()
+        viewModel.foodInfo.observe(this, {
+            tvMain.text = it.toString()
+        })
     }
 
 }

@@ -29,13 +29,13 @@ import java.util.*
 )
 data class History(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     @ColumnInfo(name = "record_date")
     val recordDate: Date,
     @ColumnInfo(name = "record_time")
     val recordTime: String,
     @ColumnInfo(name = "user_id")
-    val user: Int,
+    val user: Long,
     @ColumnInfo(name = "meal_id")
-    val meal: Int
+    val meal: Long
 )

@@ -33,7 +33,7 @@ import com.pinkyuni.fooddiary.entities.core.Vitamin
 )
 data class IngredientVitaminCrossRef(
     @ColumnInfo(name = "ingredient_id")
-    val ingredient: Int,
+    val ingredient: Long,
     @ColumnInfo(name = "vitamin_id")
-    val vitamin: Int
+    val vitamin: Long
 )

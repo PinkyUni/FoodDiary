@@ -28,11 +28,11 @@ import com.pinkyuni.fooddiary.entities.core.Unit
 )
 data class IngredientInfo(
     @ColumnInfo(name = "ingredient_id")
-    val ingredient: Int,
-    val calories: Int,
+    val ingredient: Long,
+    val calories: Long,
     val protein: Float,
     val fat: Float,
     val carbohydrate: Float,
     @ColumnInfo(name = "unit_id")
-    val unit: Int
+    val unit: Long
 )

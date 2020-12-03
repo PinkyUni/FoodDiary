@@ -32,7 +32,7 @@ import com.pinkyuni.fooddiary.entities.core.User
 )
 data class Preferences(
     @ColumnInfo(name = "user_id")
-    val user: Int,
+    val user: Long,
     @ColumnInfo(name = "category_id")
-    val category: Int
+    val category: Long
 )

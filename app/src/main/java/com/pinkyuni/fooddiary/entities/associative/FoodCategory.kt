@@ -30,7 +30,7 @@ import com.pinkyuni.fooddiary.entities.core.Food
 )
 data class FoodCategory(
     @ColumnInfo(name = "category_id")
-    val category: Int,
+    val category: Long,
     @ColumnInfo(name = "food_id")
-    val food: Int
+    val food: Long
 )

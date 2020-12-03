@@ -33,7 +33,7 @@ import com.pinkyuni.fooddiary.entities.core.Ingredient
 )
 data class FoodIngredientCrossRef(
     @ColumnInfo(name = "food_id")
-    val food: Int,
+    val food: Long,
     @ColumnInfo(name = "ingredient_id")
-    val ingredient: Int
+    val ingredient: Long
 )

@@ -1,42 +1,33 @@
 package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
-import com.pinkyuni.fooddiary.entities.associative.FoodVitaminCrossRef
 import com.pinkyuni.fooddiary.entities.core.Food
-import com.pinkyuni.fooddiary.entities.core.Vitamin
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
 import com.pinkyuni.fooddiary.entities.food.FoodIngredients
-import com.pinkyuni.fooddiary.entities.food.FoodVitamins
+import io.reactivex.Completable
+import io.reactivex.Single
 
 @Dao
 interface FoodDao {
 
     @Insert
-    fun insert(vitamin: Vitamin)
+    fun insert(food: Food): Single<Long>
 
-    @Insert
-    fun insert(food: Food)
+    @Update
+    fun update(food: Food): Completable
 
-    @Transaction
-    @Query("SELECT * FROM Food")
-    fun getFoodVitamins(): List<FoodVitamins>
-
-    @Transaction
-    @Query("SELECT * FROM Food WHERE id = :foodId")
-    fun getFoodVitamins(foodId: Int): List<FoodVitamins>
-
-    @Transaction
-    @Query("SELECT * FROM Food WHERE id = :foodId")
-    fun getFoodIngredients(foodId: Int): List<FoodIngredients>
+    @Delete
+    fun delete(food: Food): Completable
 
     @Query("SELECT * FROM FOOD WHERE name LIKE  '%' || :name || '%'")
-    fun getFood(name: String): List<Food>
+    fun getFood(name: String): Single<List<Food>>
 
     @Transaction
     @Query("SELECT * FROM Food WHERE id = :foodId")
-    fun getFoodInfo(foodId: Int): FoodAllInfo
+    fun getFoodIngredients(foodId: Long): Single<List<FoodIngredients>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addFoodVitamins(foodVitamins: List<FoodVitaminCrossRef>)
+    @Transaction
+    @Query("SELECT * FROM Food WHERE id = :foodId")
+    fun getFoodInfo(foodId: Long): Single<FoodAllInfo>
 
 }

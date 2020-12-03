@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
 )
 data class Meal(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     val name: String,
-    val percentage: Int
+    val percentage: Long
 )

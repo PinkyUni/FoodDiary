@@ -39,10 +39,10 @@ import com.pinkyuni.fooddiary.entities.core.Unit
 )
 data class HistoryFood(
     @ColumnInfo(name = "history_id")
-    val history: Int,
+    val history: Long,
     @ColumnInfo(name = "food_id")
-    val food: Int,
-    val size: Int,
+    val food: Long,
+    val size: Long,
     @ColumnInfo(name = "unit_id")
-    val unit: Int
+    val unit: Long
 )

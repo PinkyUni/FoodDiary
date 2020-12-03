@@ -34,19 +34,19 @@ import java.util.*
 )
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     val name: String,
     val login: String,
     val password: String,
-    val height: Int,
+    val height: Long,
     val birth: Date,
     @ColumnInfo(name = "target_weight")
     val targetWeight: Float,
-    val calories: Int,
+    val calories: Long,
     @ColumnInfo(name = "gender_id")
-    val gender: Int,
+    val gender: Long,
     @ColumnInfo(name = "target_id")
-    val target: Int,
+    val target: Long,
     @ColumnInfo(name = "activity_id")
-    val activity: Int
+    val activity: Long
 )

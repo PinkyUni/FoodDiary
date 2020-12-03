@@ -29,11 +29,11 @@ import java.util.*
 )
 data class StateStatistics(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     @ColumnInfo(name = "user_id")
-    val user: Int,
+    val user: Long,
     @ColumnInfo(name = "monitoring_id")
-    val monitoring: Int,
+    val monitoring: Long,
     val description: String,
     @ColumnInfo(name = "record_date")
     val recordDate: Date,

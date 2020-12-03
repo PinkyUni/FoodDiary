@@ -11,6 +11,6 @@ import androidx.room.PrimaryKey
 )
 data class Vitamin(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     val name: String
 )

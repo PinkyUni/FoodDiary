@@ -32,7 +32,7 @@ import com.pinkyuni.fooddiary.entities.core.User
 )
 data class Favourites(
     @ColumnInfo(name = "user_id")
-    val user: Int,
+    val user: Long,
     @ColumnInfo(name = "food_id")
-    val food: Int
+    val food: Long
 )

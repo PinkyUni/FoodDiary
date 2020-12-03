@@ -19,9 +19,9 @@ import java.util.*
 )
 data class WeightStatistics(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     @ColumnInfo(name = "user_id")
-    val user: Int,
+    val user: Long,
     val weight: Float,
     @ColumnInfo(name = "record_date")
     val recordDate: Date,

@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
 )
 data class Activity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     val name: String,
     val description: String
 )

@@ -16,7 +16,7 @@ import com.pinkyuni.fooddiary.utils.DateTypeConverter
 @Database(
     entities = [User::class, Gender::class, Target::class, Activity::class,
         Category::class, Food::class, Favourites::class, FoodCategory::class,
-        Vitamin::class, FoodVitaminCrossRef::class, Meal::class, Monitoring::class,
+        Vitamin::class, Meal::class, Monitoring::class,
         Ingredient::class, IngredientVitaminCrossRef::class, Unit::class,
         FoodInfo::class, History::class, HistoryFood::class, IngredientInfo::class,
         Preferences::class, WeightStatistics::class, StateStatistics::class,
