@@ -9,7 +9,7 @@ class Repository(private val context: Context) : IRepository {
 
     init {
         try {
-            database = DiaryDatabase.getAppDataBase(context = context)!!
+            database = DiaryDatabase.getAppDataBase(context = context)
         } catch (e: Exception) {
             println("Error happened while creating database :/")
         }

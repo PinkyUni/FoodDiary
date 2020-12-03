@@ -32,20 +32,16 @@ abstract class DiaryDatabase : RoomDatabase() {
     companion object {
         var INSTANCE: DiaryDatabase? = null
 
-        fun getAppDataBase(context: Context): DiaryDatabase? {
-            if (INSTANCE == null) {
-                synchronized(DiaryDatabase::class) {
-                    INSTANCE =
-                        Room.databaseBuilder(
-                            context.applicationContext,
-                            DiaryDatabase::class.java,
-                            "FoodDiary"
-                        )
-                            .createFromAsset("diary.db")
-                            .build()
-                }
+        fun getAppDataBase(context: Context): DiaryDatabase {
+            return INSTANCE ?: synchronized(DiaryDatabase::class) {
+                Room.databaseBuilder(
+                    context.applicationContext,
+                    DiaryDatabase::class.java,
+                    "FoodDiary"
+                )
+                    .createFromAsset("diary.db")
+                    .build().also { INSTANCE = it }
             }
-            return INSTANCE
         }
 
         fun destroyDataBase() {
