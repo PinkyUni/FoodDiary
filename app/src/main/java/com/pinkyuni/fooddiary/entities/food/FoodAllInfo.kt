@@ -24,7 +24,7 @@ data class FoodAllInfo(
     val ingredients: List<IngredientVitamins>
 )
 
-fun FoodAllInfo.map(): FoodInfo {
+fun FoodAllInfo.toFoodInfo(): FoodInfo {
     val ingredients = this.ingredients.map { it.ingredient }
     val vitamins = this.ingredients
         .flatMap { it.vitamins }

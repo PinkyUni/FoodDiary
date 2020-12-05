@@ -2,7 +2,6 @@ package com.pinkyuni.fooddiary.data
 
 import android.content.Context
 import com.pinkyuni.fooddiary.entities.core.Food
-import com.pinkyuni.fooddiary.entities.food.map
 import com.pinkyuni.fooddiary.usecases.FoodDao
 
 class Repository(context: Context) : IRepository {
@@ -24,6 +23,6 @@ class Repository(context: Context) : IRepository {
 
     override fun deleteFood(food: Food) = foodDao.delete(food)
 
-    override fun getFoodInfo(foodId: Long) = foodDao.getFoodInfo(foodId).map { it.map() }
+    override fun getFoodInfo(foodId: Long) = foodDao.getFoodInfo(foodId)
 
 }
