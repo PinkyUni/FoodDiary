@@ -61,8 +61,4 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
-
-    implementation "androidx.navigation:navigation-runtime-ktx:$versions_navigation"
-    implementation "androidx.navigation:navigation-fragment-ktx:$versions_navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$versions_navigation"
 }
