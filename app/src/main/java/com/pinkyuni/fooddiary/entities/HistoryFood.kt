@@ -1,48 +1,32 @@
 package com.pinkyuni.fooddiary.entities
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Relation
+import com.pinkyuni.fooddiary.entities.associative.HistoryFoodCrossRef
 import com.pinkyuni.fooddiary.entities.core.Food
 import com.pinkyuni.fooddiary.entities.core.Unit
 
-
-@Entity(
-    tableName = "History_food",
-    primaryKeys = ["history_id", "food_id", "unit_id"],
-    indices = [
-        Index("food_id"),
-        Index("history_id"),
-        Index("unit_id")
-    ],
-    foreignKeys = [
-        ForeignKey(
-            entity = Food::class,
-            parentColumns = ["id"],
-            childColumns = ["food_id"],
-            onDelete = ForeignKey.RESTRICT,
-            onUpdate = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = Unit::class,
-            parentColumns = ["id"],
-            childColumns = ["unit_id"],
-            onDelete = ForeignKey.RESTRICT,
-            onUpdate = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = History::class,
-            parentColumns = ["id"],
-            childColumns = ["history_id"],
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
-        )
-    ]
+data class HistoryRecords(
+    @Embedded val history: History,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "history_id",
+        entity = HistoryFoodCrossRef::class
+    )
+    val foodList: List<FoodHistoryAndFoodAndUnit>
 )
-data class HistoryFood(
-    @ColumnInfo(name = "history_id")
-    val history: Long,
-    @ColumnInfo(name = "food_id")
-    val food: Long,
-    val size: Long,
-    @ColumnInfo(name = "unit_id")
-    val unit: Long
+
+data class FoodHistoryAndFoodAndUnit(
+    @Embedded
+    val foodHistory: HistoryFoodCrossRef,
+    @Relation(
+        parentColumn = "food_id",
+        entityColumn = "id"
+    )
+    val food: Food,
+    @Relation(
+        parentColumn = "unit_id",
+        entityColumn = "id"
+    )
+    val unit: Unit
 )
