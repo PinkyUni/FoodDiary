@@ -18,7 +18,7 @@ import com.pinkyuni.fooddiary.utils.DateTypeConverter
         Category::class, Food::class, Favourites::class, FoodCategory::class,
         Vitamin::class, Meal::class, Monitoring::class,
         Ingredient::class, IngredientVitaminCrossRef::class, Unit::class,
-        FoodInfo::class, History::class, HistoryFood::class, IngredientInfo::class,
+        FoodInfo::class, History::class, HistoryFoodCrossRef::class, IngredientInfo::class,
         Preferences::class, WeightStatistics::class, StateStatistics::class,
         FoodIngredientCrossRef::class],
     version = 1
@@ -28,6 +28,7 @@ abstract class DiaryDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun genderDao(): GenderDao
     abstract fun foodDao(): FoodDao
+    abstract fun historyDao(): HistoryDao
 
     companion object {
         var INSTANCE: DiaryDatabase? = null
