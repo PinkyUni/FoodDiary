@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.pinkyuni.fooddiary.R
 import com.pinkyuni.fooddiary.databinding.FragmentDayBinding
 import com.pinkyuni.fooddiary.ui.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.collections.ArrayList
 
-class DayFragment private constructor(): Fragment() {
+class DayFragment private constructor() : Fragment() {
 
     private lateinit var binding: FragmentDayBinding
     private val viewModel by viewModel<MainViewModel>()
@@ -36,6 +36,11 @@ class DayFragment private constructor(): Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+        initObservers()
+    }
+
+    private fun initView() {
         val entries: MutableList<PieEntry> = ArrayList()
         entries.add(PieEntry(18.5f, "Green"))
         entries.add(PieEntry(26.7f, "Yellow"))
@@ -43,10 +48,19 @@ class DayFragment private constructor(): Fragment() {
         entries.add(PieEntry(30.8f, "Blue"))
         val set = PieDataSet(entries, "Election Results")
         val data = PieData(set)
-        binding.dayChart.data = data
-        binding.dayChart.invalidate()
+        val colors = resources.getIntArray(R.array.colors).toList()
+        set.colors = colors
+        binding.dayChart.apply {
+            this.data = data
+            centerText = resources.getString(R.string.day_calories, 1666)
+            legend.isEnabled = false
+            description.isEnabled = false
+            invalidate()
+        }
+    }
 
-        viewModel.getDayHistory(1584144000000)
+    private fun initObservers() {
+        viewModel.getDayHistory(1584144000000, 10)
         viewModel.historyInfo.observe(viewLifecycleOwner, {
             binding.tvHistory.text = it.toString()
         })

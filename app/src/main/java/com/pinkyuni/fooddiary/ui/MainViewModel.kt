@@ -32,8 +32,8 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
             .unsubscribeOnDestroy()
     }
 
-    fun getDayHistory(day: Long) {
-        repository.getHistoryForDay(day, 10)
+    fun getDayHistory(day: Long, user: Long) {
+        repository.getHistoryForDay(day, user)
             .async()
             .subscribe(
                 { _historyInfo.value = it },
