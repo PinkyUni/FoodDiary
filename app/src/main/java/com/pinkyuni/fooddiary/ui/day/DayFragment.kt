@@ -90,10 +90,22 @@ class DayFragment private constructor() : Fragment() {
         viewModel.historyInfo.observe(viewLifecycleOwner, { mealHistory ->
             mealHistory.forEach {
                 when (it.meal.id) {
-                    BREAKFAST -> breakfastAdapter.add(it.foodList)
-                    LUNCH -> lunchAdapter.add(it.foodList)
-                    DINNER -> dinnerAdapter.add(it.foodList)
-                    SNACK -> snackAdapter.add(it.foodList)
+                    BREAKFAST -> {
+                        breakfastAdapter.add(it.foodList)
+                        binding.tvBreakfastTime.text = it.time
+                    }
+                    LUNCH -> {
+                        lunchAdapter.add(it.foodList)
+                        binding.tvLunchTime.text = it.time
+                    }
+                    DINNER -> {
+                        dinnerAdapter.add(it.foodList)
+                        binding.tvDinnerTime.text = it.time
+                    }
+                    SNACK -> {
+                        snackAdapter.add(it.foodList)
+                        binding.tvSnackTime.text = it.time
+                    }
                 }
             }
         })

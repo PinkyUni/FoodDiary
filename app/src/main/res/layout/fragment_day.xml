@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,6 +25,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dayChart" />
 
+    <TextView
+        android:id="@+id/tvBreakfastTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvBreakfast"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12:44" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBreakfastHistory"
         style="@style/RecyclerViewStyle"
@@ -43,6 +54,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvBreakfastHistory" />
 
+    <TextView
+        android:id="@+id/tvLunchTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvLunch"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12:44" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLunchHistory"
         style="@style/RecyclerViewStyle"
@@ -60,6 +81,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvLunchHistory" />
 
+    <TextView
+        android:id="@+id/tvDinnerTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvDinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12:44" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDinnerHistory"
         style="@style/RecyclerViewStyle"
@@ -76,6 +107,16 @@
         android:text="@string/snack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rvDinnerHistory" />
+
+    <TextView
+        android:id="@+id/tvSnackTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvSnack"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12:44" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSnackHistory"
