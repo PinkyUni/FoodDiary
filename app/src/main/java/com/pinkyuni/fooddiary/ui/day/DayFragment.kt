@@ -1,10 +1,15 @@
 package com.pinkyuni.fooddiary.ui.day
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.text.bold
+import androidx.core.text.color
+import androidx.core.text.scale
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.PieData
@@ -58,7 +63,15 @@ class DayFragment private constructor() : Fragment() {
         set.colors = colors
         binding.dayChart.apply {
             this.data = data
-            centerText = resources.getString(R.string.day_calories, 1666)
+            val s = 1666.toString()
+            val ss1 = SpannableStringBuilder()
+                .bold {
+                    scale(3f) {
+                        color(ContextCompat.getColor(context, R.color.grey_dark)) { append(s) }
+                    }
+                }
+                .append(resources.getString(R.string.day_calories))
+            centerText = ss1
             legend.isEnabled = false
             description.isEnabled = false
             invalidate()

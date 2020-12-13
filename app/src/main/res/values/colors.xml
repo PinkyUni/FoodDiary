@@ -3,6 +3,7 @@
     <color name="purple_light">#ea80fc</color>
     <color name="purple">#FF6200EE</color>
     <color name="purple_dark">#FF3700B3</color>
+    <color name="grey_dark">#424242</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green_light_transparent">#3299CC00</color>
@@ -10,6 +11,7 @@
     <color name="lime">#CDDC39</color>
     <color name="green_light">@android:color/holo_green_light</color>
     <color name="green">#4CAF50</color>
+    <color name="green_dark">#33691e</color>
 
     <array name="colors">
         <item>@color/yellow</item>
