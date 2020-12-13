@@ -29,6 +29,8 @@ abstract class DiaryDatabase : RoomDatabase() {
     abstract fun genderDao(): GenderDao
     abstract fun foodDao(): FoodDao
     abstract fun historyDao(): HistoryDao
+    abstract fun activityDao(): ActivityDao
+    abstract fun targetDao(): TargetDao
 
     companion object {
         var INSTANCE: DiaryDatabase? = null

@@ -2,6 +2,7 @@ package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
 import com.pinkyuni.fooddiary.entities.core.Gender
+import io.reactivex.Single
 
 @Dao
 interface GenderDao {
@@ -18,5 +19,5 @@ interface GenderDao {
     fun getGenderByName(name: String): List<Gender>
 
     @Query("SELECT * FROM Gender")
-    fun getGenders(): List<Gender>
+    fun getGenders(): Single<List<Gender>>
 }
