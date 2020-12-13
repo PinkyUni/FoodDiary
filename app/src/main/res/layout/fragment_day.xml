@@ -16,12 +16,73 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvHistory"
-        android:layout_width="match_parent"
+        android:id="@+id/tvBreakfast"
+        style="@style/RecyclerTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/breakfast"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dayChart" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBreakfastHistory"
+        style="@style/RecyclerViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rv_meal_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBreakfast" />
+
+    <TextView
+        android:id="@+id/tvLunch"
+        style="@style/RecyclerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lunch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvBreakfastHistory" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvLunchHistory"
+        style="@style/RecyclerViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rv_meal_back"
+        app:layout_constraintTop_toBottomOf="@id/tvLunch" />
+
+    <TextView
+        android:id="@+id/tvDinner"
+        style="@style/RecyclerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvLunchHistory" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDinnerHistory"
+        style="@style/RecyclerViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rv_meal_back"
+        app:layout_constraintTop_toBottomOf="@id/tvDinner" />
+
+    <TextView
+        android:id="@+id/tvSnack"
+        style="@style/RecyclerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/snack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvDinnerHistory" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSnackHistory"
+        style="@style/RecyclerViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rv_meal_back"
+        app:layout_constraintTop_toBottomOf="@id/tvSnack" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

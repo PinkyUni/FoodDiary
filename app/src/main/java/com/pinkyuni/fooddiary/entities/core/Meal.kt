@@ -15,3 +15,8 @@ data class Meal(
     val name: String,
     val percentage: Long
 )
+
+const val BREAKFAST = 1L
+const val LUNCH = 2L
+const val DINNER = 3L
+const val SNACK = 4L
