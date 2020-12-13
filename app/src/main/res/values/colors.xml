@@ -6,7 +6,10 @@
     <color name="grey_dark">#424242</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_transparent">#80FFFFFF</color>
+    <color name="transparent">@android:color/transparent</color>
     <color name="green_light_transparent">#3299CC00</color>
+    <color name="green_light_transparent_super">#1A99CC00</color>
     <color name="yellow">#FFEB3B</color>
     <color name="lime">#CDDC39</color>
     <color name="green_light">@android:color/holo_green_light</color>

@@ -33,4 +33,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="EditTextTheme">
+        <item name="colorControlNormal">@color/cardview_dark_background</item>
+        <item name="colorControlActivated">@color/purple</item>
+        <item name="colorControlHighlight">@color/purple</item>
+    </style>
+
 </resources>
