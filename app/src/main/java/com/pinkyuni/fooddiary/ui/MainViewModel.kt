@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pinkyuni.fooddiary.data.IRepository
 import com.pinkyuni.fooddiary.data.model.FoodInfo
-import com.pinkyuni.fooddiary.entities.HistoryRecords
+import com.pinkyuni.fooddiary.entities.MealHistory
 import com.pinkyuni.fooddiary.entities.food.toFoodInfo
 import com.pinkyuni.fooddiary.utils.DisposeHolder
 import com.pinkyuni.fooddiary.utils.SingleLiveEvent
@@ -18,8 +18,8 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
     private val _foodInfo = MutableLiveData<FoodInfo>()
     val foodInfo: LiveData<FoodInfo> = _foodInfo
 
-    private val _historyInfo = MutableLiveData<List<HistoryRecords>>()
-    val historyInfo: LiveData<List<HistoryRecords>> = _historyInfo
+    private val _historyInfo = MutableLiveData<List<MealHistory>>()
+    val historyInfo: LiveData<List<MealHistory>> = _historyInfo
 
     fun getFoodInfo(foodId: Long) {
         repository.getFoodInfo(foodId)

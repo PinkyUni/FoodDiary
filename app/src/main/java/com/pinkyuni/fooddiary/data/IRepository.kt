@@ -1,6 +1,6 @@
 package com.pinkyuni.fooddiary.data
 
-import com.pinkyuni.fooddiary.entities.HistoryRecords
+import com.pinkyuni.fooddiary.entities.MealHistory
 import com.pinkyuni.fooddiary.entities.core.Food
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
 import io.reactivex.Completable
@@ -16,5 +16,5 @@ interface IRepository {
 
     fun getFoodInfo(foodId: Long): Single<FoodAllInfo>
 
-    fun getHistoryForDay(day: Long, user: Long): Single<List<HistoryRecords>>
+    fun getHistoryForDay(day: Long, user: Long): Single<List<MealHistory>>
 }
