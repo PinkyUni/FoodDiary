@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.miProfile -> {
                     binding.bottomAppBar.apply {
-                        fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
                         replaceMenu(R.menu.bottom_profile_menu)
                     }
                     binding.fab.apply {
@@ -59,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun popLastFragment() {
         binding.bottomAppBar.apply {
-            fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
             replaceMenu(R.menu.bottom_nav_menu)
         }
         binding.fab.apply {
