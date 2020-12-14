@@ -10,10 +10,9 @@ import com.pinkyuni.fooddiary.R
 import com.pinkyuni.fooddiary.databinding.FragmentProfileBinding
 import com.pinkyuni.fooddiary.ui.MainViewModel
 import com.pinkyuni.fooddiary.ui.dialog.DatePicker
+import com.pinkyuni.fooddiary.utils.format
 import com.pinkyuni.fooddiary.utils.toEditable
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ProfileFragment private constructor() : Fragment() {
 
@@ -50,21 +49,15 @@ class ProfileFragment private constructor() : Fragment() {
             binding.apply {
                 tvName.text = user.name.toEditable()
                 tvHeight.text = user.height.toString().toEditable()
-                btnBirth.text = formatDate(user.birth)
+                btnBirth.text = user.birth.format()
             }
         }
-    }
-
-    private fun formatDate(date: Date): String {
-        val pattern = "dd.MM.yyyy"
-        val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-        return simpleDateFormat.format(date)
     }
 
     private fun initView() {
         binding.btnBirth.setOnClickListener {
             val dialog = DatePicker {
-                binding.btnBirth.text = formatDate(it.time)
+                binding.btnBirth.text = it.time.format()
             }
             dialog.show(childFragmentManager, DatePicker.TAG)
         }
@@ -73,7 +66,7 @@ class ProfileFragment private constructor() : Fragment() {
                 val list = targets.map { it.name }
                 val adapter = ArrayAdapter(
                     context!!,
-                    R.layout.gender_dropdown_item,
+                    R.layout.general_dropdown_item,
                     list
                 )
                 binding.targetDropdown.setAdapter(adapter)
@@ -84,7 +77,7 @@ class ProfileFragment private constructor() : Fragment() {
                 val list = genders.map { it.name }
                 val adapter = ArrayAdapter(
                     context!!,
-                    R.layout.gender_dropdown_item,
+                    R.layout.general_dropdown_item,
                     list
                 )
                 binding.genderDropDown.setAdapter(adapter)
@@ -95,7 +88,7 @@ class ProfileFragment private constructor() : Fragment() {
                 val list = activities.map { it.name }
                 val adapter = ArrayAdapter(
                     context!!,
-                    R.layout.gender_dropdown_item,
+                    R.layout.general_dropdown_item,
                     list
                 )
                 binding.activityDropdown.setAdapter(adapter)

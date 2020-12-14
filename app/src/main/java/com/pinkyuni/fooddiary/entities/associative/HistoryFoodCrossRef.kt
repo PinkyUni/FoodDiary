@@ -40,7 +40,7 @@ import com.pinkyuni.fooddiary.entities.core.Unit
 )
 data class HistoryFoodCrossRef(
     @ColumnInfo(name = "history_id")
-    val history: Long,
+    val history: Long = 0,
     @ColumnInfo(name = "food_id")
     val food: Long,
     val size: Long,

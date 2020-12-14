@@ -1,10 +1,12 @@
 package com.pinkyuni.fooddiary.data
 
+import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.MealHistory
 import com.pinkyuni.fooddiary.entities.core.Activity
 import com.pinkyuni.fooddiary.entities.core.Food
 import com.pinkyuni.fooddiary.entities.core.Gender
 import com.pinkyuni.fooddiary.entities.core.Target
+import com.pinkyuni.fooddiary.entities.core.Unit
 import com.pinkyuni.fooddiary.entities.core.User
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
 import io.reactivex.Completable
@@ -33,4 +35,10 @@ interface IRepository {
     fun getGenders(): Single<List<Gender>>
 
     fun getTargets(): Single<List<Target>>
+
+    fun getUnits(): Single<List<Unit>>
+
+    fun addFoodRecord(foodRecord: FoodRecord): Completable
+
+    fun getFoodList(): Single<List<Food>>
 }

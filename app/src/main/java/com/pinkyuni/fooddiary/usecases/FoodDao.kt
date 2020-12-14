@@ -30,4 +30,7 @@ interface FoodDao {
     @Query("SELECT * FROM Food WHERE id = :foodId")
     fun getFoodInfo(foodId: Long): Single<FoodAllInfo>
 
+    @Query("SELECT * FROM Food")
+    fun getFoodList(): Single<List<Food>>
+
 }

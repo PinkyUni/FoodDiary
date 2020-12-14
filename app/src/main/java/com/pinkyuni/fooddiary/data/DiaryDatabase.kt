@@ -31,6 +31,7 @@ abstract class DiaryDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
     abstract fun activityDao(): ActivityDao
     abstract fun targetDao(): TargetDao
+    abstract fun unitDao(): UnitDao
 
     companion object {
         var INSTANCE: DiaryDatabase? = null

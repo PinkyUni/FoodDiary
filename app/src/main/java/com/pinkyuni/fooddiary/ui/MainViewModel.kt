@@ -5,15 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pinkyuni.fooddiary.data.IRepository
 import com.pinkyuni.fooddiary.data.model.FoodInfo
+import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.MealHistory
-import com.pinkyuni.fooddiary.entities.core.Activity
-import com.pinkyuni.fooddiary.entities.core.Gender
+import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
-import com.pinkyuni.fooddiary.entities.core.User
+import com.pinkyuni.fooddiary.entities.core.Unit
 import com.pinkyuni.fooddiary.entities.food.toFoodInfo
 import com.pinkyuni.fooddiary.utils.DisposeHolder
 import com.pinkyuni.fooddiary.utils.SingleLiveEvent
 import com.pinkyuni.fooddiary.utils.async
+
+typealias kUnit = kotlin.Unit
 
 class MainViewModel(private val repository: IRepository, private val disposeHolder: DisposeHolder) :
     ViewModel(), DisposeHolder by disposeHolder {
@@ -27,6 +29,11 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
 
     private val _historyInfo = MutableLiveData<List<MealHistory>>()
     val historyInfo: LiveData<List<MealHistory>> = _historyInfo
+
+    private var activities: List<Activity>? = null
+    private var genders: List<Gender>? = null
+    private var targets: List<Target>? = null
+    private var units: List<Unit>? = null
 
 //    private val _userInfo = MutableLiveData<User>()
 //    val userInfo: LiveData<User> = _userInfo
@@ -52,7 +59,7 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
             .unsubscribeOnDestroy()
     }
 
-    fun getUser(id: Long, onUserLoaded: (User) -> Unit) {
+    fun getUser(id: Long, onUserLoaded: (User) -> kUnit) {
         repository.getUser(id)
             .async()
             .doOnSubscribe { _isLoading.postValue(true) }
@@ -66,36 +73,102 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
             .unsubscribeOnDestroy()
     }
 
-    fun getActivities(onLoaded: (List<Activity>) -> Unit) {
-        repository.getActivities()
+    fun getActivities(onLoaded: (List<Activity>) -> kUnit) {
+        if (activities.isNullOrEmpty()) {
+            repository.getActivities()
+                .async()
+                .doOnSubscribe { _isLoading.postValue(true) }
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        activities = it
+                        onLoaded.invoke(it)
+                    },
+                    { error.value = it.message }
+                )
+                .unsubscribeOnDestroy()
+        } else {
+            activities?.let(onLoaded)
+        }
+    }
+
+    fun getTargets(onLoaded: (List<Target>) -> kUnit) {
+        if (targets.isNullOrEmpty()) {
+            repository.getTargets()
+                .async()
+                .doOnSubscribe { _isLoading.postValue(true) }
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        onLoaded.invoke(it)
+                    },
+                    { error.value = it.message }
+                )
+                .unsubscribeOnDestroy()
+        } else {
+            targets?.let(onLoaded)
+        }
+    }
+
+    fun getGenders(onLoaded: (List<Gender>) -> kUnit) {
+        if (genders.isNullOrEmpty()) {
+            repository.getGenders()
+                .async()
+                .doOnSubscribe { _isLoading.postValue(true) }
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        onLoaded.invoke(it)
+                    },
+                    { error.value = it.message }
+                )
+                .unsubscribeOnDestroy()
+        } else {
+            genders?.let(onLoaded)
+        }
+    }
+
+    fun getUnits(onLoaded: (List<Unit>) -> kUnit) {
+        if (units.isNullOrEmpty()) {
+            repository.getUnits()
+                .async()
+                .doOnSubscribe { _isLoading.postValue(true) }
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        onLoaded.invoke(it)
+                    },
+                    { error.value = it.message }
+                )
+                .unsubscribeOnDestroy()
+        } else {
+            units?.let(onLoaded)
+        }
+    }
+
+    fun addFoodRecord(
+        foodId: Long,
+        size: Long,
+        unitId: Long,
+        mealId: Long,
+        onComplete: () -> kUnit
+    ) {
+        val foodRecord = FoodRecord(foodId, size, unitId, mealId)
+        repository.addFoodRecord(foodRecord)
             .async()
             .doOnSubscribe { _isLoading.postValue(true) }
             .subscribe(
                 {
                     _isLoading.value = false
-                    onLoaded.invoke(it)
+                    onComplete.invoke()
                 },
                 { error.value = it.message }
             )
             .unsubscribeOnDestroy()
     }
 
-    fun getTargets(onLoaded: (List<Target>) -> Unit) {
-        repository.getTargets()
-            .async()
-            .doOnSubscribe { _isLoading.postValue(true) }
-            .subscribe(
-                {
-                    _isLoading.value = false
-                    onLoaded.invoke(it)
-                },
-                { error.value = it.message }
-            )
-            .unsubscribeOnDestroy()
-    }
-
-    fun getGenders(onLoaded: (List<Gender>) -> Unit) {
-        repository.getGenders()
+    fun getFoodList(onLoaded: (List<Food>) -> kUnit) {
+        repository.getFoodList()
             .async()
             .doOnSubscribe { _isLoading.postValue(true) }
             .subscribe(

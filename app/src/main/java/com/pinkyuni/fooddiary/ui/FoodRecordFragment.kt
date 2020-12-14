@@ -6,6 +6,8 @@ import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
@@ -22,6 +24,10 @@ class FoodRecordFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodRecordBinding
     private val viewModel by viewModel<MainViewModel>()
+
+    private var foodId: Long = 0
+    private var mealId: Long = 0
+    private var unitId: Long = 0
 
     companion object {
 
@@ -46,14 +52,46 @@ class FoodRecordFragment : Fragment() {
     }
 
     private fun initView() {
+        viewModel.getFoodList { foodList ->
+            val list = foodList.map { it.name }
+            val adapter = ArrayAdapter(
+                context!!,
+                R.layout.general_dropdown_item,
+                list
+            )
+            binding.foodDropDown.setAdapter(adapter)
+        }
         with(binding) {
             ViewUtils.resetTextInputErrorsOnTextChanged(lFood, lMeal, lSize, lUnit)
         }
+        binding.foodDropDown.onItemClickListener =
+            OnItemClickListener { _, _, position, _ ->
+                foodId = position.toLong() + 1
+            }
+        binding.mealDropDown.onItemClickListener =
+            OnItemClickListener { _, _, position, _ ->
+                mealId = position.toLong() + 1
+            }
+        binding.unitDropDown.onItemClickListener =
+            OnItemClickListener { _, _, position, _ ->
+                unitId = position.toLong() + 1
+            }
         binding.btnAdd.setOnClickListener {
             with(binding) {
                 val isNotEmpty = ViewUtils.setErrorsIfEmpty(lFood, lMeal, lSize, lUnit)
                 if (isNotEmpty) {
-                    Toast.makeText(context, "kek", Toast.LENGTH_SHORT).show()
+                    viewModel.addFoodRecord(
+                        foodId,
+                        binding.etSize.text.toString().toLong(),
+                        unitId,
+                        mealId
+                    ) {
+                        Toast.makeText(
+                            context,
+                            resources.getString(R.string.added_successfully),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
