@@ -2,13 +2,11 @@ package com.pinkyuni.fooddiary.data
 
 import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.MealHistory
-import com.pinkyuni.fooddiary.entities.core.Activity
-import com.pinkyuni.fooddiary.entities.core.Food
-import com.pinkyuni.fooddiary.entities.core.Gender
+import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
 import com.pinkyuni.fooddiary.entities.core.Unit
-import com.pinkyuni.fooddiary.entities.core.User
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
+import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -28,7 +26,7 @@ interface IRepository {
 
     fun getFoodInfo(foodId: Long): Single<FoodAllInfo>
 
-    fun getHistoryForDay(day: Long, user: Long): Single<List<MealHistory>>
+    fun getHistoryForDay(day: Long): Single<List<MealHistory>>
 
     fun getActivities(): Single<List<Activity>>
 
@@ -38,7 +36,11 @@ interface IRepository {
 
     fun getUnits(): Single<List<Unit>>
 
-    fun addFoodRecord(foodRecord: FoodRecord): Completable
+    fun getMeals(): Single<List<Meal>>
+
+    fun addFoodRecord(foodRecord: FoodRecord): Single<Long>
 
     fun getFoodList(): Single<List<Food>>
+
+    fun getFoodUnits(foodId: Long): Single<FoodUnit>
 }

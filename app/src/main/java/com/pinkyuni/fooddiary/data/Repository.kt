@@ -5,17 +5,17 @@ import android.content.SharedPreferences
 import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.History
 import com.pinkyuni.fooddiary.entities.associative.HistoryFoodCrossRef
-import com.pinkyuni.fooddiary.entities.core.Activity
-import com.pinkyuni.fooddiary.entities.core.Food
-import com.pinkyuni.fooddiary.entities.core.Gender
+import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
 import com.pinkyuni.fooddiary.entities.core.Unit
-import com.pinkyuni.fooddiary.entities.core.User
+import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import com.pinkyuni.fooddiary.entities.mapToMealHistory
 import com.pinkyuni.fooddiary.usecases.*
 import com.pinkyuni.fooddiary.utils.formatTime
+import com.pinkyuni.fooddiary.utils.getDateMillis
 import io.reactivex.Completable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class Repository(context: Context) : IRepository {
@@ -33,9 +33,11 @@ class Repository(context: Context) : IRepository {
     private lateinit var genderDao: GenderDao
     private lateinit var targetDao: TargetDao
     private lateinit var unitDao: UnitDao
+    private lateinit var mealDao: MealDao
 
     init {
         sharedPreferences = context.getSharedPreferences(SP_TAG, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putLong(USER_ID_TAG, 10).apply()
         try {
             val database = DiaryDatabase.getAppDataBase(context = context)
             foodDao = database.foodDao()
@@ -45,13 +47,14 @@ class Repository(context: Context) : IRepository {
             targetDao = database.targetDao()
             genderDao = database.genderDao()
             unitDao = database.unitDao()
+            mealDao = database.mealDao()
         } catch (e: Exception) {
             println("Error happened while creating database :/")
         }
     }
 
     private fun getUserLocalId(): Long {
-        return sharedPreferences.getLong(USER_ID_TAG, 0)
+        return sharedPreferences.getLong(USER_ID_TAG, 10)
     }
 
     override fun getUser(login: String, password: String): Single<User> =
@@ -69,8 +72,8 @@ class Repository(context: Context) : IRepository {
 
     override fun getFoodInfo(foodId: Long) = foodDao.getFoodInfo(foodId)
 
-    override fun getHistoryForDay(day: Long, user: Long) =
-        historyDao.getHistoryForDay(day, user).map { it.mapToMealHistory() }
+    override fun getHistoryForDay(day: Long) =
+        historyDao.getHistoryForDay(day, getUserLocalId()).map { it.mapToMealHistory() }
 
     override fun getActivities(): Single<List<Activity>> = activityDao.getActivities()
 
@@ -80,30 +83,37 @@ class Repository(context: Context) : IRepository {
 
     override fun getUnits(): Single<List<Unit>> = unitDao.getUnits()
 
-    override fun addFoodRecord(foodRecord: FoodRecord): Completable {
-        val curDate = Date()
-        val time = curDate.formatTime()
-        return Completable.fromCallable {
+    override fun getMeals(): Single<List<Meal>> = mealDao.getMeals()
+
+    override fun addFoodRecord(foodRecord: FoodRecord): Single<Long> {
+        return Single.fromCallable {
+            val time = Date().formatTime()
             val historyId = historyDao.getOrInsertHistory(
                 History(
                     0,
-                    curDate,
+                    Date(getDateMillis()),
                     time,
                     getUserLocalId(),
                     foodRecord.meal
                 )
             )
-            historyDao.insertFoodRecord(
-                HistoryFoodCrossRef(
-                    history = historyId,
-                    food = foodRecord.food,
-                    size = foodRecord.size,
-                    unit = foodRecord.unit
+            historyId
+        }.subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.io())
+            .flatMap {
+                historyDao.insertFoodRecord(
+                    HistoryFoodCrossRef(
+                        history = it,
+                        food = foodRecord.food,
+                        size = foodRecord.size,
+                        unit = foodRecord.unit
+                    )
                 )
-            )
-        }
+            }
     }
 
     override fun getFoodList(): Single<List<Food>> = foodDao.getFoodList()
+
+    override fun getFoodUnits(foodId: Long): Single<FoodUnit> = foodDao.getFoodUnits(foodId)
 
 }

@@ -2,8 +2,10 @@ package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
 import com.pinkyuni.fooddiary.entities.core.Food
+import com.pinkyuni.fooddiary.entities.core.Unit
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
 import com.pinkyuni.fooddiary.entities.food.FoodIngredients
+import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -32,5 +34,8 @@ interface FoodDao {
 
     @Query("SELECT * FROM Food")
     fun getFoodList(): Single<List<Food>>
+
+    @Query("SELECT * FROM Food WHERE id = :foodId")
+    fun getFoodUnits(foodId: Long): Single<FoodUnit>
 
 }

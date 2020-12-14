@@ -10,10 +10,13 @@ import com.pinkyuni.fooddiary.entities.MealHistory
 import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
 import com.pinkyuni.fooddiary.entities.core.Unit
+import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
+import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import com.pinkyuni.fooddiary.entities.food.toFoodInfo
 import com.pinkyuni.fooddiary.utils.DisposeHolder
 import com.pinkyuni.fooddiary.utils.SingleLiveEvent
 import com.pinkyuni.fooddiary.utils.async
+import java.util.*
 
 typealias kUnit = kotlin.Unit
 
@@ -24,36 +27,36 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _foodInfo = MutableLiveData<FoodInfo>()
-    val foodInfo: LiveData<FoodInfo> = _foodInfo
-
-    private val _historyInfo = MutableLiveData<List<MealHistory>>()
-    val historyInfo: LiveData<List<MealHistory>> = _historyInfo
-
     private var activities: List<Activity>? = null
     private var genders: List<Gender>? = null
     private var targets: List<Target>? = null
     private var units: List<Unit>? = null
+    private var meals: List<Meal>? = null
 
-//    private val _userInfo = MutableLiveData<User>()
-//    val userInfo: LiveData<User> = _userInfo
-
-    fun getFoodInfo(foodId: Long) {
+    fun getFoodInfo(foodId: Long, onComplete: (FoodInfo) -> kUnit) {
         repository.getFoodInfo(foodId)
             .async()
+            .doOnSubscribe { _isLoading.postValue(true) }
             .map { it.toFoodInfo() }
             .subscribe(
-                { _foodInfo.value = it },
+                {
+                    _isLoading.value = false
+                    onComplete.invoke(it)
+                },
                 { error.value = it.message }
             )
             .unsubscribeOnDestroy()
     }
 
-    fun getDayHistory(day: Long, user: Long) {
-        repository.getHistoryForDay(day, user)
+    fun getDayHistory(day: Long, onLoaded: (List<MealHistory>) -> kUnit) {
+        repository.getHistoryForDay(day)
             .async()
+            .doOnSubscribe { _isLoading.postValue(true) }
             .subscribe(
-                { _historyInfo.value = it },
+                {
+                    _isLoading.value = false
+                    onLoaded.invoke(it)
+                },
                 { error.value = it.message }
             )
             .unsubscribeOnDestroy()
@@ -146,6 +149,24 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
         }
     }
 
+    fun getMeals(onLoaded: (List<Meal>) -> kUnit) {
+        if (meals.isNullOrEmpty()) {
+            repository.getMeals()
+                .async()
+                .doOnSubscribe { _isLoading.postValue(true) }
+                .subscribe(
+                    {
+                        _isLoading.value = false
+                        onLoaded.invoke(it)
+                    },
+                    { error.value = it.message }
+                )
+                .unsubscribeOnDestroy()
+        } else {
+            meals?.let(onLoaded)
+        }
+    }
+
     fun addFoodRecord(
         foodId: Long,
         size: Long,
@@ -169,6 +190,20 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
 
     fun getFoodList(onLoaded: (List<Food>) -> kUnit) {
         repository.getFoodList()
+            .async()
+            .doOnSubscribe { _isLoading.postValue(true) }
+            .subscribe(
+                {
+                    _isLoading.value = false
+                    onLoaded.invoke(it)
+                },
+                { error.value = it.message }
+            )
+            .unsubscribeOnDestroy()
+    }
+
+    fun getFoodUnits(foodId: Long, onLoaded: (FoodUnit) -> kUnit) {
+        repository.getFoodUnits(foodId)
             .async()
             .doOnSubscribe { _isLoading.postValue(true) }
             .subscribe(

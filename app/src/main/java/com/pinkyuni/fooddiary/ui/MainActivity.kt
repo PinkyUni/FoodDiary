@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun popLastFragment() {
+    fun popLastFragment() {
         binding.bottomAppBar.apply {
             replaceMenu(R.menu.bottom_nav_menu)
         }
@@ -84,6 +84,13 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(FoodRecordFragment.TAG)
             .commit()
         popFragmentOnFabClick()
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount != 0) {
+            initAddFab()
+        }
+        super.onBackPressed()
     }
 
 }

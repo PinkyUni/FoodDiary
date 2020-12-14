@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.data.*
 import com.pinkyuni.fooddiary.R
 import com.pinkyuni.fooddiary.databinding.FragmentFoodRecordBinding
+import com.pinkyuni.fooddiary.entities.core.Unit
 import com.pinkyuni.fooddiary.utils.ViewUtils
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -24,6 +25,8 @@ class FoodRecordFragment : Fragment() {
 
     private lateinit var binding: FragmentFoodRecordBinding
     private val viewModel by viewModel<MainViewModel>()
+
+    private var units: List<Unit>? = null
 
     private var foodId: Long = 0
     private var mealId: Long = 0
@@ -52,6 +55,9 @@ class FoodRecordFragment : Fragment() {
     }
 
     private fun initView() {
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            binding.pbLoading.visibility = if (it) View.VISIBLE else View.GONE
+        })
         viewModel.getFoodList { foodList ->
             val list = foodList.map { it.name }
             val adapter = ArrayAdapter(
@@ -61,12 +67,33 @@ class FoodRecordFragment : Fragment() {
             )
             binding.foodDropDown.setAdapter(adapter)
         }
+        viewModel.getMeals { meals ->
+            val list = meals.map { it.name }
+            val adapter = ArrayAdapter(
+                context!!,
+                R.layout.general_dropdown_item,
+                list
+            )
+            binding.mealDropDown.setAdapter(adapter)
+        }
         with(binding) {
             ViewUtils.resetTextInputErrorsOnTextChanged(lFood, lMeal, lSize, lUnit)
         }
         binding.foodDropDown.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
                 foodId = position.toLong() + 1
+                viewModel.getFoodUnits(foodId) { foodUnit ->
+                    units = foodUnit.foodInfo.map { it.unit }
+                    units?.let { units ->
+                        val list = units.map { it.name }
+                        val adapter = ArrayAdapter(
+                            context!!,
+                            R.layout.general_dropdown_item,
+                            list
+                        )
+                        binding.unitDropDown.setAdapter(adapter)
+                    }
+                }
             }
         binding.mealDropDown.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
@@ -74,7 +101,7 @@ class FoodRecordFragment : Fragment() {
             }
         binding.unitDropDown.onItemClickListener =
             OnItemClickListener { _, _, position, _ ->
-                unitId = position.toLong() + 1
+                unitId = units!![position].id
             }
         binding.btnAdd.setOnClickListener {
             with(binding) {
@@ -91,6 +118,7 @@ class FoodRecordFragment : Fragment() {
                             resources.getString(R.string.added_successfully),
                             Toast.LENGTH_SHORT
                         ).show()
+                        (activity as MainActivity).popLastFragment()
                     }
                 }
             }

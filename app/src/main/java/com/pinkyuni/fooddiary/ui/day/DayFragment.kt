@@ -19,7 +19,10 @@ import com.pinkyuni.fooddiary.R
 import com.pinkyuni.fooddiary.databinding.FragmentDayBinding
 import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.ui.MainViewModel
+import com.pinkyuni.fooddiary.utils.getDateMillis
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DayFragment private constructor() : Fragment() {
 
@@ -99,8 +102,18 @@ class DayFragment private constructor() : Fragment() {
     }
 
     private fun initObservers() {
-        viewModel.getDayHistory(1584144000000, 10)
-        viewModel.historyInfo.observe(viewLifecycleOwner, { mealHistory ->
+        viewModel.isLoading.observe(viewLifecycleOwner, {
+            binding.pbLoading.visibility = if (it) View.VISIBLE else View.GONE
+        })
+        viewModel.error.observe(this, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val today = getDateMillis()
+        viewModel.getDayHistory(today) { mealHistory ->
             mealHistory.forEach {
                 when (it.meal.id) {
                     BREAKFAST -> {
@@ -121,10 +134,7 @@ class DayFragment private constructor() : Fragment() {
                     }
                 }
             }
-        })
-        viewModel.error.observe(this, {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-        })
+        }
     }
 
 }
