@@ -54,12 +54,18 @@ class MainActivity : AppCompatActivity() {
             }
             return@setOnMenuItemClickListener true
         }
+        initAddFab()
     }
 
     private fun popLastFragment() {
         binding.bottomAppBar.apply {
             replaceMenu(R.menu.bottom_nav_menu)
         }
+        initAddFab()
+        supportFragmentManager.popBackStack()
+    }
+
+    private fun initAddFab() {
         binding.fab.apply {
             setImageDrawable(
                 ContextCompat.getDrawable(
@@ -68,10 +74,16 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             setOnClickListener {
-                Toast.makeText(this@MainActivity, "add clicked", Toast.LENGTH_SHORT).show()
+                addNewRecord()
             }
         }
-        supportFragmentManager.popBackStack()
+    }
+
+    private fun addNewRecord() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.flContainer, FoodRecordFragment.newInstance())
+            .addToBackStack(FoodRecordFragment.TAG)
+            .commit()
     }
 
 }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp">
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/bcChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:minHeight="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lFood"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/food"
+        android:labelFor="@id/foodDropDown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bcChart">
+
+        <AutoCompleteTextView
+            android:id="@+id/foodDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="7"
+            android:minWidth="140sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lSize"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/size"
+        app:layout_constraintEnd_toStartOf="@id/lUnit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lFood">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="30"
+            android:minWidth="100sp"
+            android:text="@string/size"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lUnit"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/food"
+        android:labelFor="@id/unitDropDown"
+        app:layout_constraintBottom_toBottomOf="@id/lSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/lSize"
+        app:layout_constraintTop_toTopOf="@id/lSize">
+
+        <AutoCompleteTextView
+            android:id="@+id/unitDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="7"
+            android:minWidth="140sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
