@@ -8,6 +8,7 @@ import com.pinkyuni.fooddiary.entities.associative.HistoryFoodCrossRef
 import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
 import com.pinkyuni.fooddiary.entities.core.Unit
+import com.pinkyuni.fooddiary.entities.food.FoodIngredients
 import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import com.pinkyuni.fooddiary.entities.mapToMealHistory
 import com.pinkyuni.fooddiary.usecases.*
@@ -115,5 +116,13 @@ class Repository(context: Context) : IRepository {
     override fun getFoodList(): Single<List<Food>> = foodDao.getFoodList()
 
     override fun getFoodUnits(foodId: Long): Single<FoodUnit> = foodDao.getFoodUnits(foodId)
+
+    override fun getFoodIngredients(foodId: Long): Single<List<FoodIngredients>> =
+        foodDao.getFoodIngredients(foodId)
+
+    override fun getDayCalories(day: Long): Single<Long?> =
+        Single.fromCallable {
+            historyDao.getTotalDayCalories(day)
+        }
 
 }

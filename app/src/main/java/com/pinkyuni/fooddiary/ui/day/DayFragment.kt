@@ -1,5 +1,6 @@
 package com.pinkyuni.fooddiary.ui.day
 
+import android.content.Context
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
@@ -21,7 +22,6 @@ import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.ui.MainViewModel
 import com.pinkyuni.fooddiary.utils.getDateMillis
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.*
 import kotlin.collections.ArrayList
 
 class DayFragment private constructor() : Fragment() {
@@ -66,15 +66,7 @@ class DayFragment private constructor() : Fragment() {
         set.colors = colors
         binding.dayChart.apply {
             this.data = data
-            val s = 1666.toString()
-            val ss1 = SpannableStringBuilder()
-                .bold {
-                    scale(3f) {
-                        color(ContextCompat.getColor(context, R.color.grey_dark)) { append(s) }
-                    }
-                }
-                .append(resources.getString(R.string.num_calories))
-            centerText = ss1
+            centerText = chartCenterText(context, 0L)
             legend.isEnabled = false
             description.isEnabled = false
             invalidate()
@@ -113,6 +105,13 @@ class DayFragment private constructor() : Fragment() {
     override fun onResume() {
         super.onResume()
         val today = getDateMillis()
+        viewModel.getTotalCalories(today) {
+            if (it != null)
+                binding.dayChart.apply {
+                    centerText = chartCenterText(context, it)
+                    invalidate()
+                }
+        }
         viewModel.getDayHistory(today) { mealHistory ->
             mealHistory.forEach {
                 when (it.meal.id) {
@@ -136,5 +135,19 @@ class DayFragment private constructor() : Fragment() {
             }
         }
     }
+
+    private fun chartCenterText(context: Context, calories: Long) =
+        SpannableStringBuilder()
+            .bold {
+                scale(3f) {
+                    color(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.grey_dark
+                        )
+                    ) { append(calories.toString()) }
+                }
+            }
+            .append(resources.getString(R.string.num_calories))
 
 }

@@ -5,6 +5,7 @@ import com.pinkyuni.fooddiary.entities.core.Ingredient
 import com.pinkyuni.fooddiary.entities.core.Unit
 
 @Entity(
+    tableName = "Ingredient_info",
     primaryKeys = ["ingredient_id", "unit_id"],
     indices = [
         Index("ingredient_id", "unit_id")

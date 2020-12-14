@@ -93,6 +93,33 @@ class FoodRecordFragment : Fragment() {
                         )
                         binding.unitDropDown.setAdapter(adapter)
                     }
+                    binding.bcChart.apply {
+                        val calories =
+                            foodUnit.foodInfo.find { it.foodInfo.unit == 2L }!!.foodInfo.calories
+                        centerText = chartCenterText(context, calories)
+                        invalidate()
+                    }
+                }
+                viewModel.getFoodIngredients(foodId) {
+                    var carbo = 0f
+                    var protein = 0f
+                    var fat = 0f
+                    it.forEach {
+                        it.ingredients.forEach {
+                            it.info.forEach {
+                                if (it.unit == 2L) {
+                                    carbo += it.carbohydrate
+                                    protein += it.protein
+                                    fat += it.fat
+                                }
+                            }
+                        }
+                    }
+                    binding.apply {
+                        tvCarboAmount.text = resources.getString(R.string.amount_g, carbo)
+                        tvProteinAmount.text = resources.getString(R.string.amount_g, protein)
+                        tvFatAmount.text = resources.getString(R.string.amount_g, fat)
+                    }
                 }
             }
         binding.mealDropDown.onItemClickListener =
@@ -144,7 +171,7 @@ class FoodRecordFragment : Fragment() {
         }
     }
 
-    private fun chartCenterText(context: Context, calories: Int) =
+    private fun chartCenterText(context: Context, calories: Long) =
         SpannableStringBuilder()
             .bold {
                 scale(2f) {

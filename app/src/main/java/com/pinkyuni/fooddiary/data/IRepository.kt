@@ -6,6 +6,7 @@ import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
 import com.pinkyuni.fooddiary.entities.core.Unit
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
+import com.pinkyuni.fooddiary.entities.food.FoodIngredients
 import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -43,4 +44,9 @@ interface IRepository {
     fun getFoodList(): Single<List<Food>>
 
     fun getFoodUnits(foodId: Long): Single<FoodUnit>
+
+    fun getFoodIngredients(foodId: Long): Single<List<FoodIngredients>>
+
+    fun getDayCalories(day: Long): Single<Long?>
+
 }

@@ -41,4 +41,13 @@ interface HistoryDao {
     @Insert
     fun insertFoodRecord(historyFood: HistoryFoodCrossRef): Single<Long>
 
+    @Transaction
+    @Query("SELECT sum(amount / size * calories) FROM Food_ingredient\n" +
+            "INNER JOIN Ingredient_info ON Food_ingredient.ingredient_id = Ingredient_info.ingredient_id\n" +
+            "INNER JOIN FOOD ON Food.id = Food_ingredient.food_id\n" +
+            "INNER JOIN History_food ON History_food.food_id = Food.id\n" +
+            "WHERE Ingredient_info.unit_id = 2 AND history_id IN (SELECT id FROM History WHERE user_id = 10 AND record_date = :day);\n" +
+            "\n")
+    fun getTotalDayCalories(day: Long): Long
+
 }

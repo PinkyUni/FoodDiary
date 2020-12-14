@@ -10,13 +10,13 @@ import com.pinkyuni.fooddiary.entities.MealHistory
 import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.entities.core.Target
 import com.pinkyuni.fooddiary.entities.core.Unit
-import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
+import com.pinkyuni.fooddiary.entities.food.FoodIngredients
 import com.pinkyuni.fooddiary.entities.food.FoodUnit
 import com.pinkyuni.fooddiary.entities.food.toFoodInfo
 import com.pinkyuni.fooddiary.utils.DisposeHolder
 import com.pinkyuni.fooddiary.utils.SingleLiveEvent
 import com.pinkyuni.fooddiary.utils.async
-import java.util.*
+import com.pinkyuni.fooddiary.utils.getDateMillis
 
 typealias kUnit = kotlin.Unit
 
@@ -204,6 +204,34 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
 
     fun getFoodUnits(foodId: Long, onLoaded: (FoodUnit) -> kUnit) {
         repository.getFoodUnits(foodId)
+            .async()
+            .doOnSubscribe { _isLoading.postValue(true) }
+            .subscribe(
+                {
+                    _isLoading.value = false
+                    onLoaded.invoke(it)
+                },
+                { error.value = it.message }
+            )
+            .unsubscribeOnDestroy()
+    }
+
+    fun getFoodIngredients(foodId: Long, onLoaded: (List<FoodIngredients>) -> kUnit) {
+        repository.getFoodIngredients(foodId)
+            .async()
+            .doOnSubscribe { _isLoading.postValue(true) }
+            .subscribe(
+                {
+                    _isLoading.value = false
+                    onLoaded.invoke(it)
+                },
+                { error.value = it.message }
+            )
+            .unsubscribeOnDestroy()
+    }
+
+    fun getTotalCalories(day: Long, onLoaded: (Long?) -> kUnit) {
+        repository.getDayCalories(day)
             .async()
             .doOnSubscribe { _isLoading.postValue(true) }
             .subscribe(

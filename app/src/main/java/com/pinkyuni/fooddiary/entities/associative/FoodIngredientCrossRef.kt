@@ -35,5 +35,6 @@ data class FoodIngredientCrossRef(
     @ColumnInfo(name = "food_id")
     val food: Long,
     @ColumnInfo(name = "ingredient_id")
-    val ingredient: Long
+    val ingredient: Long,
+    val amount: Long
 )

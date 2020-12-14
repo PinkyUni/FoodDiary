@@ -25,5 +25,6 @@
     <string name="add">Add</string>
     <string name="meal">Meal</string>
     <string name="g_0">0g</string>
+    <string name="amount_g">%.1fg</string>
     <string name="added_successfully">Record added successfully!</string>
 </resources>

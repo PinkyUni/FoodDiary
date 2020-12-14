@@ -2,7 +2,6 @@ package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
 import com.pinkyuni.fooddiary.entities.core.Food
-import com.pinkyuni.fooddiary.entities.core.Unit
 import com.pinkyuni.fooddiary.entities.food.FoodAllInfo
 import com.pinkyuni.fooddiary.entities.food.FoodIngredients
 import com.pinkyuni.fooddiary.entities.food.FoodUnit
