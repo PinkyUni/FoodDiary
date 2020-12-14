@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FoodDiary</string>
     <string name="profile">Profile</string>
-    <string name="day_calories">\ncalories</string>
+    <string name="num_calories">\ncalories</string>
     <string name="breakfast">Breakfast</string>
     <string name="lunch">Lunch</string>
     <string name="dinner">Dinner</string>
@@ -20,4 +20,9 @@
     <string name="protein">Protein</string>
     <string name="fat">Fat</string>
     <string name="carbohydrates">Carbohydrates</string>
+    <string name="size_unit">%d%s</string>
+    <string name="unit">Unit</string>
+    <string name="add">Add</string>
+    <string name="meal">Meal</string>
+    <string name="g_0">0g</string>
 </resources>

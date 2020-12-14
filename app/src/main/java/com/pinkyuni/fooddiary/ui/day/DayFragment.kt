@@ -59,7 +59,7 @@ class DayFragment private constructor() : Fragment() {
         entries.add(PieEntry(30.8f, "Blue"))
         val set = PieDataSet(entries, "Election Results")
         val data = PieData(set)
-        val colors = resources.getIntArray(R.array.colors).toList()
+        val colors = resources.getIntArray(R.array.main_chart_colors).toList()
         set.colors = colors
         binding.dayChart.apply {
             this.data = data
@@ -70,7 +70,7 @@ class DayFragment private constructor() : Fragment() {
                         color(ContextCompat.getColor(context, R.color.grey_dark)) { append(s) }
                     }
                 }
-                .append(resources.getString(R.string.day_calories))
+                .append(resources.getString(R.string.num_calories))
             centerText = ss1
             legend.isEnabled = false
             description.isEnabled = false

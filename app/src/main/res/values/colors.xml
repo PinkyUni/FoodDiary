@@ -3,6 +3,7 @@
     <color name="purple_light">#ea80fc</color>
     <color name="purple">#FF6200EE</color>
     <color name="purple_dark">#FF3700B3</color>
+    <color name="pink">#E91E63</color>
     <color name="grey_dark">#424242</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -16,10 +17,16 @@
     <color name="green">#4CAF50</color>
     <color name="green_dark">#33691e</color>
 
-    <array name="colors">
+    <array name="main_chart_colors">
         <item>@color/yellow</item>
         <item>@color/lime</item>
         <item>@color/green_light</item>
         <item>@color/green</item>
+    </array>
+
+    <array name="food_chart_colors">
+        <item>@color/purple_light</item>
+        <item>@color/green_light</item>
+        <item>@color/pink</item>
     </array>
 </resources>

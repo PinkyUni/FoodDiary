@@ -1,10 +1,8 @@
 package com.pinkyuni.fooddiary.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.pinkyuni.fooddiary.R
 import com.pinkyuni.fooddiary.databinding.ActivityMainBinding
 import com.pinkyuni.fooddiary.ui.day.DayFragment
@@ -32,20 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.miProfile -> {
-                    binding.bottomAppBar.apply {
-                        replaceMenu(R.menu.bottom_profile_menu)
-                    }
-                    binding.fab.apply {
-                        setImageDrawable(
-                            ContextCompat.getDrawable(
-                                this@MainActivity,
-                                R.drawable.ic_reply
-                            )
-                        )
-                        setOnClickListener {
-                            popLastFragment()
-                        }
-                    }
+                    popFragmentOnFabClick()
                     supportFragmentManager.beginTransaction()
                         .replace(R.id.flContainer, ProfileFragment.newInstance())
                         .addToBackStack(ProfileFragment.TAG)
@@ -55,6 +40,20 @@ class MainActivity : AppCompatActivity() {
             return@setOnMenuItemClickListener true
         }
         initAddFab()
+    }
+
+    private fun popFragmentOnFabClick() {
+        binding.fab.apply {
+            setImageDrawable(
+                ContextCompat.getDrawable(
+                    this@MainActivity,
+                    R.drawable.ic_reply
+                )
+            )
+            setOnClickListener {
+                popLastFragment()
+            }
+        }
     }
 
     private fun popLastFragment() {
@@ -84,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.flContainer, FoodRecordFragment.newInstance())
             .addToBackStack(FoodRecordFragment.TAG)
             .commit()
+        popFragmentOnFabClick()
     }
 
 }

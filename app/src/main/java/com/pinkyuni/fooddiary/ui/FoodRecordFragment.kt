@@ -1,17 +1,21 @@
 package com.pinkyuni.fooddiary.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.text.bold
+import androidx.core.text.color
+import androidx.core.text.scale
 import androidx.fragment.app.Fragment
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.pinkyuni.fooddiary.R
 import com.pinkyuni.fooddiary.databinding.FragmentFoodRecordBinding
+import com.pinkyuni.fooddiary.utils.ViewUtils
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FoodRecordFragment : Fragment() {
@@ -37,39 +41,55 @@ class FoodRecordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.bcChart.apply {
-            val proteinCount: MutableList<BarEntry> = ArrayList()
-            proteinCount.add(BarEntry(0f, 10f))
-            val proteinSet = BarDataSet(proteinCount, resources.getString(R.string.protein))
-            proteinSet.color = ContextCompat.getColor(context, R.color.green_light)
+        initChart()
+        initView()
+    }
 
-            val fatCount = ArrayList<BarEntry>()
-            fatCount.add(BarEntry(1f, 80f))
-            val fatSet = BarDataSet(fatCount, resources.getString(R.string.fat))
-            fatSet.color = ContextCompat.getColor(context, R.color.green_dark)
-
-            val carboCount = ArrayList<BarEntry>()
-            carboCount.add(BarEntry(2f, 40f))
-            val carboSet = BarDataSet(carboCount, resources.getString(R.string.carbohydrates))
-            carboSet.color = ContextCompat.getColor(context, R.color.green)
-
-            val data = BarData()
-            data.addDataSet(proteinSet)
-            data.addDataSet(fatSet)
-            data.addDataSet(carboSet)
-
-            data.barWidth = 0.9f // set custom bar width
-            setData(data)
-            setFitBars(true) // make the x-axis fit exactly all bars
-            setDrawGridBackground(false)
-            axisLeft.isEnabled = false
-            axisRight.isEnabled = false
-            xAxis.setDrawGridLines(false)
-            xAxis.setDrawLabels(false)
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            description.isEnabled = false
-            invalidate() // refresh
+    private fun initView() {
+        with(binding) {
+            ViewUtils.resetTextInputErrorsOnTextChanged(lFood, lMeal, lSize, lUnit)
+        }
+        binding.btnAdd.setOnClickListener {
+            with(binding) {
+                val isNotEmpty = ViewUtils.setErrorsIfEmpty(lFood, lMeal, lSize, lUnit)
+                if (isNotEmpty) {
+                    Toast.makeText(context, "kek", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
+
+    private fun initChart() {
+        binding.bcChart.apply {
+            val entries: MutableList<PieEntry> = ArrayList()
+            entries.add(PieEntry(100f))
+            val set = PieDataSet(entries, "")
+            val data = PieData(set)
+            val colors = resources.getIntArray(R.array.food_chart_colors).toList()
+            set.colors = colors
+            set.setDrawValues(false)
+            holeRadius = 80f
+            setUsePercentValues(true)
+            setData(data)
+            legend.isEnabled = false
+            description.isEnabled = false
+            centerText = chartCenterText(context, 0)
+            invalidate()
+        }
+    }
+
+    private fun chartCenterText(context: Context, calories: Int) =
+        SpannableStringBuilder()
+            .bold {
+                scale(2f) {
+                    color(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.grey_dark
+                        )
+                    ) { append(calories.toString()) }
+                }
+            }
+            .append(resources.getString(R.string.num_calories))
 
 }
