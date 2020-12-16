@@ -1,5 +1,6 @@
 package com.pinkyuni.fooddiary.data
 
+import com.pinkyuni.fooddiary.data.model.DayInfo
 import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.MealHistory
 import com.pinkyuni.fooddiary.entities.core.*
@@ -47,6 +48,6 @@ interface IRepository {
 
     fun getFoodIngredients(foodId: Long): Single<List<FoodIngredients>>
 
-    fun getDayCalories(day: Long): Single<Long?>
+    fun getDayCalories(day: Long): Single<DayInfo>
 
 }

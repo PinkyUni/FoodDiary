@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pinkyuni.fooddiary.data.IRepository
+import com.pinkyuni.fooddiary.data.model.DayInfo
 import com.pinkyuni.fooddiary.data.model.FoodInfo
 import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.MealHistory
@@ -230,7 +231,7 @@ class MainViewModel(private val repository: IRepository, private val disposeHold
             .unsubscribeOnDestroy()
     }
 
-    fun getTotalCalories(day: Long, onLoaded: (Long?) -> kUnit) {
+    fun getTotalCalories(day: Long, onLoaded: (DayInfo) -> kUnit) {
         repository.getDayCalories(day)
             .async()
             .doOnSubscribe { _isLoading.postValue(true) }

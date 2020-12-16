@@ -2,6 +2,7 @@ package com.pinkyuni.fooddiary.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.pinkyuni.fooddiary.data.model.DayInfo
 import com.pinkyuni.fooddiary.data.model.FoodRecord
 import com.pinkyuni.fooddiary.entities.History
 import com.pinkyuni.fooddiary.entities.associative.HistoryFoodCrossRef
@@ -120,9 +121,9 @@ class Repository(context: Context) : IRepository {
     override fun getFoodIngredients(foodId: Long): Single<List<FoodIngredients>> =
         foodDao.getFoodIngredients(foodId)
 
-    override fun getDayCalories(day: Long): Single<Long?> =
+    override fun getDayCalories(day: Long): Single<DayInfo> =
         Single.fromCallable {
-            historyDao.getTotalDayCalories(day)
+            historyDao.getTotalDayCalories(getUserLocalId(), day)
         }
 
 }

@@ -13,6 +13,7 @@ import androidx.core.text.color
 import androidx.core.text.scale
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -22,7 +23,7 @@ import com.pinkyuni.fooddiary.entities.core.*
 import com.pinkyuni.fooddiary.ui.MainViewModel
 import com.pinkyuni.fooddiary.utils.getDateMillis
 import org.koin.android.viewmodel.ext.android.viewModel
-import kotlin.collections.ArrayList
+
 
 class DayFragment private constructor() : Fragment() {
 
@@ -56,11 +57,8 @@ class DayFragment private constructor() : Fragment() {
 
     private fun initView() {
         val entries: MutableList<PieEntry> = ArrayList()
-        entries.add(PieEntry(18.5f, "Green"))
-        entries.add(PieEntry(26.7f, "Yellow"))
-        entries.add(PieEntry(24.0f, "Red"))
-        entries.add(PieEntry(30.8f, "Blue"))
-        val set = PieDataSet(entries, "Election Results")
+        entries.add(PieEntry(100f))
+        val set = PieDataSet(entries, "")
         val data = PieData(set)
         val colors = resources.getIntArray(R.array.main_chart_colors).toList()
         set.colors = colors
@@ -106,11 +104,28 @@ class DayFragment private constructor() : Fragment() {
         super.onResume()
         val today = getDateMillis()
         viewModel.getTotalCalories(today) {
-            if (it != null)
-                binding.dayChart.apply {
-                    centerText = chartCenterText(context, it)
-                    invalidate()
-                }
+            binding.dayChart.apply {
+                val entries: MutableList<PieEntry> = ArrayList()
+                entries.add(PieEntry(it.totalProtein, resources.getString(R.string.protein)))
+                entries.add(PieEntry(it.totalCarbo, resources.getString(R.string.carbohydrates)))
+                entries.add(PieEntry(it.totalFat, resources.getString(R.string.fat)))
+                val set = PieDataSet(entries, "")
+                val data = PieData(set)
+                val colors = resources.getIntArray(R.array.main_chart_colors).toList()
+                set.colors = colors
+                set.setDrawValues(false)
+//                setEntryLabelColor(Color.BLUE)
+                setDrawEntryLabels(true)
+
+//                set.setValueTextColors(listOf(ContextCompat.getColor(context, R.color.grey_dark)))
+//                set.xValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
+//                set.valueLinePart1OffsetPercentage = 80f
+//                set.valueLinePart1Length = 0.2f
+//                set.valueLinePart2Length = 0.4f
+                setData(data)
+                centerText = chartCenterText(context, it.totalCalories.toLong())
+                invalidate()
+            }
         }
         viewModel.getDayHistory(today) { mealHistory ->
             mealHistory.forEach {

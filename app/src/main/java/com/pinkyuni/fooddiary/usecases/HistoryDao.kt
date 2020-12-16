@@ -1,6 +1,7 @@
 package com.pinkyuni.fooddiary.usecases
 
 import androidx.room.*
+import com.pinkyuni.fooddiary.data.model.DayInfo
 import com.pinkyuni.fooddiary.entities.DayHistoryRecords
 import com.pinkyuni.fooddiary.entities.History
 import com.pinkyuni.fooddiary.entities.associative.HistoryFoodCrossRef
@@ -41,13 +42,16 @@ interface HistoryDao {
     @Insert
     fun insertFoodRecord(historyFood: HistoryFoodCrossRef): Single<Long>
 
-    @Transaction
-    @Query("SELECT sum(amount / size * calories) FROM Food_ingredient\n" +
-            "INNER JOIN Ingredient_info ON Food_ingredient.ingredient_id = Ingredient_info.ingredient_id\n" +
-            "INNER JOIN FOOD ON Food.id = Food_ingredient.food_id\n" +
-            "INNER JOIN History_food ON History_food.food_id = Food.id\n" +
-            "WHERE Ingredient_info.unit_id = 2 AND history_id IN (SELECT id FROM History WHERE user_id = 10 AND record_date = :day);\n" +
-            "\n")
-    fun getTotalDayCalories(day: Long): Long
+    @Query("""SELECT  
+                    sum(calories * amount * size / 10000) AS totalCalories,
+                    sum(protein * amount * size / 10000) AS totalProtein,
+                    sum(fat * amount * size / 10000) AS totalFat,
+                    sum(carbohydrate * amount * size / 10000) AS totalCarbo
+            FROM History_food
+            INNER JOIN History ON History.ID = History_food.history_id
+            INNER JOIN Food_ingredient ON Food_ingredient.food_id = History_food.food_id
+            INNER JOIN Ingredient_info ON Food_ingredient.ingredient_id = Ingredient_info.ingredient_id
+            WHERE Ingredient_info.unit_id = 2 AND user_id = :userId AND record_date = :day;""")
+    fun getTotalDayCalories(userId: Long, day: Long): DayInfo
 
 }
